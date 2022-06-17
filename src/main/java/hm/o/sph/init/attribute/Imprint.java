@@ -7,14 +7,15 @@ import net.minecraft.util.registry.RegistryEntry;
 import java.util.Set;
 
 public class Imprint {
-
     protected final RegistryEntry.Reference<Imprint> regEntry;
     public final Tier tier;
+    public final Set<Attribute> attrs;
     public final ImprintSeries series;
-    protected Imprint(Tier tier, ImprintSeries series) {
+    protected Imprint(Tier tier, ImprintSeries series, Set<Attribute> attrs) {
         regEntry = SophisRegistries.IMPRINT.createEntry(this);
         this.tier = tier;
         this.series = series;
+        this.attrs = attrs;
     }
 
     public static class Undefined {
