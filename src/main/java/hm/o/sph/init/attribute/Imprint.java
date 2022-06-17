@@ -4,6 +4,7 @@ import hm.o.sph.SophisRegistries;
 import hm.o.sph.util.Tier;
 import net.minecraft.util.registry.RegistryEntry;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Imprint {
@@ -11,6 +12,7 @@ public class Imprint {
     public final Tier tier;
     public final Set<Attribute> attrs;
     public final ImprintSeries series;
+
     protected Imprint(Tier tier, ImprintSeries series, Set<Attribute> attrs) {
         regEntry = SophisRegistries.IMPRINT.createEntry(this);
         this.tier = tier;
@@ -21,6 +23,7 @@ public class Imprint {
     public static class Undefined {
         public final Imprint base;
         public final Set<Attribute.Undefined> attrs;
+
         protected Undefined(Imprint base, Set<Attribute.Undefined> attrs) {
             this.base = base;
             this.attrs = attrs;
@@ -30,8 +33,12 @@ public class Imprint {
     public static class Stable {
         public final Undefined origin;
         public final Set<Attribute.Stable> current;
-        protected  Stable(Undefined origin, Set<Attribute.Stable> current) {
 
+        public final Set<Imprint.Stable> extraImps;
+        public boolean extraordinary;
+
+        protected Stable(Undefined origin, Set<Attribute.Stable> current) {
+            this.extraImps = new HashSet<>();
             this.origin = origin;
             this.current = current;
         }
