@@ -4,7 +4,6 @@ import hm.o.sph.init.attribute.Attribute;
 import hm.o.sph.init.attribute.AttributeApplyFor;
 import hm.o.sph.init.attribute.Imprint;
 import hm.o.sph.util.SophisRarity;
-import hm.o.sph.util.function.Property;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
@@ -41,6 +40,9 @@ public class ItemApplyFor {
         protected ItemCategory category;
         protected SophisRarity rarity;
         protected int credit;
+
+        public Supplier<SophisItem> idle = () -> register(ITEM, Identifier.of(MODID, id),
+                new SophisItem(new Item.Settings().group(category.group), category, credit, rarity));
 
         protected NormalBuilder() {
         }

@@ -17,7 +17,7 @@ import static hm.o.sph.Sophis.MODID;
 
 public class SophisRegistries {
 
-    public static SideEffect init = () -> LOGGER.info("Initialize Registries.");
+    public static final SideEffect init = () -> LOGGER.info("Initialize Sophis Registries.");
     public static final Registry<Attribute> ATTRIBUTE = Builder.apply(Attribute.class).registryId("attribute").defaultId("stage_level").idle().get();
     public static final Registry<Imprint> IMPRINT = Builder.apply(Imprint.class).registryId("imprint").defaultId("empty").idle().get();
 
