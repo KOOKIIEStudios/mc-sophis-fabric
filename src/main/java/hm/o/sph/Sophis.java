@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Sophis implements ModInitializer {
-
     public static final String MODID = "sph";
     public static final FabricLoader FABRIC = FabricLoader.getInstance();
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID.toUpperCase());

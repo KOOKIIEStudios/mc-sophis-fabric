@@ -1,6 +1,7 @@
 package hm.o.sph.init.item;
 
 import hm.o.sph.init.attribute.Attribute;
+import hm.o.sph.init.attribute.AttributeApplyFor;
 import hm.o.sph.init.attribute.Imprint;
 import hm.o.sph.util.SophisRarity;
 import net.minecraft.item.Item;
@@ -17,6 +18,9 @@ import static net.minecraft.util.registry.Registry.ITEM;
 import static net.minecraft.util.registry.Registry.register;
 
 public class EquipmentItem extends SophisItem {
+    public final Set<Imprint.Stable> imprints;
+    public final boolean disposable;
+    public final Set<Attribute.Undefined> basicAttrs;
 
     protected EquipmentItem(Settings settings, Set<Attribute.Undefined> basicAttrs, ItemCategory category, int credit, SophisRarity rarity, boolean disposable) {
         super(settings, category, credit, rarity);
@@ -24,10 +28,6 @@ public class EquipmentItem extends SophisItem {
         this.basicAttrs = basicAttrs;
         imprints = new HashSet<>();
     }
-
-    public final Set<Imprint.Stable> imprints;
-    public final boolean disposable;
-    public final Set<Attribute.Undefined> basicAttrs;
 
     public static class Builder {
 
@@ -81,10 +81,9 @@ public class EquipmentItem extends SophisItem {
         public Supplier<EquipmentItem> idle() {
             return () -> register(ITEM, Identifier.of(MODID, id), new EquipmentItem(new Item.Settings().group(category.group), basicAttrs, category, credit, rarity, disposable));
         }
-
     }
 
     public static void addImprints(@NotNull EquipmentItem item, Imprint.Undefined... imprint) {
-        item.imprints.addAll(Arrays.stream(imprint).map(Imprint.Undefined::toStable).toList());
+        item.imprints.addAll(Arrays.stream(imprint).map(AttributeApplyFor::creatingStableImprint).toList());
     }
 }
