@@ -1,10 +1,11 @@
 package hm.o.sph.init.item;
 
 import hm.o.sph.init.attribute.Attribute;
-import hm.o.sph.init.attribute.AttributeApplyFor;
+import hm.o.sph.init.attribute.AttributeApplier;
 import hm.o.sph.init.attribute.Imprint;
 import hm.o.sph.util.SophisRarity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -18,21 +19,26 @@ import static hm.o.sph.Sophis.MODID;
 import static net.minecraft.util.registry.Registry.ITEM;
 import static net.minecraft.util.registry.Registry.register;
 
-public class ItemApplyFor {
-    private ItemApplyFor() {
+public class ItemApplier {
+    private ItemApplier() {
     }
 
     @Contract(value = "_, _ -> param1")
-    public static @NotNull EquipmentItem increasingImp(@NotNull EquipmentItem item, @NotNull Set<Imprint.Undefined> imps) {
-        if(AttributeApplyFor.checkingUniqueImp(imps.iterator().next())) item.imprints.add(AttributeApplyFor.creatingStableImp(imps.iterator().next()));
-        else item.imprints.addAll(imps.stream().filter(AttributeApplyFor::checkingNormalImp).map(AttributeApplyFor::creatingStableImp).toList());
+    public static @NotNull EquipmentItem increaseImp(@NotNull EquipmentItem item, @NotNull Set<Imprint.Undefined> imps) {
+        if(AttributeApplier.checkUniqueImp(imps.iterator().next())) item.imprints.add(AttributeApplier.createStableImp(imps.iterator().next()));
+        else item.imprints.addAll(imps.stream().filter(AttributeApplier::checkNormalImp).map(AttributeApplier::createStableImp).toList());
         return item;
     }
 
-    public static @NotNull NormalBuilder buildingItem(String id) {
+    public static @NotNull NormalBuilder buildItem(String id) {
         var b = new NormalBuilder();
         b.id = id;
         return b;
+    }
+
+    @Contract(value = "_, _ -> new", pure = true)
+    public static @NotNull ItemCategory createCategory(String id, ItemGroup inVanilla) {
+        return new ItemCategory(inVanilla, id);
     }
 
     public static class NormalBuilder {

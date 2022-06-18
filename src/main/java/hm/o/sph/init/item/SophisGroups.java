@@ -13,7 +13,8 @@ import net.minecraft.util.Identifier;
 public class SophisGroups {
 
     public static final SideEffect init = () -> LOGGER.info("Initialize Sophis Groups.");
-    public static final ItemGroup MATERIAL = build(new Identifier(MODID, "material"), () -> new ItemStack(Items.BONE));
-    public static final ItemGroup EQUIPMENT = build(new Identifier(MODID, "equipment"), () -> new ItemStack(Items.BONE));
-    public static final ItemGroup CONSUMABLES = build(new Identifier(MODID, "consumables"), () -> new ItemStack(Items.BONE));
+    public static final ItemGroup MATERIAL = build(Identifier.of(MODID, "material"), () -> new ItemStack(Items.BONE));
+    public static final ItemGroup EQUIPMENT = build(Identifier.of(MODID, "equipment"), () -> new ItemStack(Items.BONE));
+    public static final ItemGroup CRAFT = build(Identifier.of(MODID, "craft"), () -> new ItemStack(Items.BONE));
+    public static final ItemGroup CONSUMABLES = build(Identifier.of(MODID, "consumables"), () -> new ItemStack(Items.BONE));
 }
