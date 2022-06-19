@@ -21,7 +21,6 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${project.jackson_version}"
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-toml:${project.jackson_version}"
-    implementation "org.jdom:jdom2:${project.xml_parser_version}"
 }
 
 processResources {

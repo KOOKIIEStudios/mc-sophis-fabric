@@ -1,8 +1,12 @@
 package hm.o.sph.init.serialization;
 
-public class Deserialization {
+import java.util.HashSet;
 
+public class DeserData {
     public static class Item {
+
+        public static final HashSet<Material> Materials = new HashSet<>();
+
         public static class Material {
             private String id;
             private String category;
@@ -39,6 +43,11 @@ public class Deserialization {
 
             public void setRarity(String rarity) {
                 this.rarity = rarity;
+            }
+
+            @Override
+            public String toString() {
+                return this.id + ":::" + this.category + ":::" + this.rarity + ":::" + this.credit;
             }
         }
 

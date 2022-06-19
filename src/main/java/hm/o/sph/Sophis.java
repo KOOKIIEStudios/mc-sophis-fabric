@@ -1,18 +1,17 @@
 package hm.o.sph;
 
 import hm.o.sph.init.item.ItemCategory;
-import hm.o.sph.init.item.SophisItems;
 import hm.o.sph.init.item.SophisGroups;
-import hm.o.sph.init.serialization.Deserialization;
-import hm.o.sph.init.serialization.SerializationApplier;
-import hm.o.sph.init.serialization.SerializationDir;
+import hm.o.sph.init.item.SophisItems;
+import hm.o.sph.init.serialization.DeserApplier;
+import hm.o.sph.init.serialization.DeserData;
+import hm.o.sph.init.serialization.DeserDir;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
@@ -31,25 +30,21 @@ public class Sophis implements ModInitializer {
         SophisItems.init.effect();
         //SerializationOf.init.effect();
 
-        var YAML_FILES = new HashSet<Deserialization.Item.Material>();
-        var TOML_FILES = new HashSet<Deserialization.Item.Material>();
-        var JSON_FILES = new HashSet<Deserialization.Item.Material>();
+        var materials = new HashSet<DeserData.Item.Material>();
 
-        Arrays.stream(Objects.requireNonNull(SerializationDir.MATERIAL_ITEM.folder.listFiles())).forEach(file -> {
-            try {
-                if(SerializationApplier.checkYAMLExtName(file)) {
-                    YAML_FILES.add(SerializationApplier.YAML.readValue(file, Deserialization.Item.Material.class));
-                } else if(SerializationApplier.checkTOMLExtName(file)) {
-                    TOML_FILES.add(SerializationApplier.TOML.readValue(file, Deserialization.Item.Material.class));
-                } else if(SerializationApplier.checkJSONExtName(file)) {
-                    JSON_FILES.add(SerializationApplier.JSON.readValue(file, Deserialization.Item.Material.class));
-                }
-            } catch(IOException e) {
-                e.printStackTrace();
-            }
-            YAML_FILES.forEach(obj -> System.out.println(obj.getId() + "::" + obj.getCategory() + "::" + obj.getRarity() + "::" + obj.getCredit()));
-            TOML_FILES.forEach(obj -> System.out.println(obj.getId() + "::" + obj.getCategory() + "::" + obj.getRarity() + "::" + obj.getCredit()));
-            JSON_FILES.forEach(obj -> System.out.println(obj.getId() + "::" + obj.getCategory() + "::" + obj.getRarity() + "::" + obj.getCredit()));
-        });
+        Arrays.stream(Objects.requireNonNull(DeserDir.MATERIAL_ITEM.folder.listFiles()))
+                .filter(DeserApplier::checkYAMLExtName)
+                .map(file -> DeserApplier.deser(DeserApplier.YAML, file, DeserData.Item.Material.class))
+                .forEach(materials::add);
+        Arrays.stream(Objects.requireNonNull(DeserDir.MATERIAL_ITEM.folder.listFiles()))
+                .filter(DeserApplier::checkTOMLExtName)
+                .map(file -> DeserApplier.deser(DeserApplier.TOML, file, DeserData.Item.Material.class))
+                .forEach(materials::add);
+        Arrays.stream(Objects.requireNonNull(DeserDir.MATERIAL_ITEM.folder.listFiles()))
+                .filter(DeserApplier::checkJSONExtName)
+                .map(file -> DeserApplier.deser(DeserApplier.JSON, file, DeserData.Item.Material.class))
+                .forEach(materials::add);
+
+        materials.forEach(System.out::println);
     }
 }

@@ -7,19 +7,19 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import org.apache.commons.io.FilenameUtils;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
+import java.io.IOException;
 
 import static hm.o.sph.Sophis.ROOT;
 
-public class SerializationApplier {
+public class DeserApplier {
 
     public static final ObjectMapper YAML = new ObjectMapper(new YAMLFactory());
     public static final ObjectMapper TOML = new ObjectMapper(new TomlFactory());
     public static final ObjectMapper JSON = new ObjectMapper(new JsonFactory());
 
-    // region FILE OR FOLD BEFORE SERIALIZING
+    // region DESERIALIZED FOLDER
 
     @Contract(value = "_, _ -> new", pure = true)
     private static @NotNull File hierarchicallyGet(String fst, String sec) {
@@ -27,17 +27,17 @@ public class SerializationApplier {
     }
 
     @Contract(value = "_, _ -> new", pure = true)
-    public static @NotNull SerializationDir createSerialization(String fstLayer, String secLayer) {
-        return new SerializationDir( secLayer + "_" + fstLayer, hierarchicallyGet(fstLayer, secLayer));
+    public static @NotNull DeserDir createDeserDir(String fstLayer, String secLayer) {
+        return new DeserDir( secLayer + "_" + fstLayer, hierarchicallyGet(fstLayer, secLayer));
     }
 
-    public static boolean checkExistenceOfDir(@NotNull SerializationDir serData) {
+    public static boolean checkExistenceOfDir(@NotNull DeserDir serData) {
         return serData.folder.exists();
     }
 
     // endregion
 
-    // region DESERIALIZING
+    // region DESERIALIZING CHECKER
 
     public static boolean checkYAMLExtName(@NotNull File file) {
         return FilenameUtils.getExtension(file.getName()).equals("yaml") || FilenameUtils.getExtension(file.getName()).equals("yml");
@@ -51,11 +51,19 @@ public class SerializationApplier {
         return FilenameUtils.getExtension(file.getName()).equals("json");
     }
 
-    public static boolean checkXMLExtName(@NotNull File file) {
-        return FilenameUtils.getExtension(file.getName()).equals("xml");
+    // endregion
+
+    //region DESERIALIZATION
+
+    public static <T> T deser(@NotNull ObjectMapper mapper, File file, Class<T> type) {
+        T result = null;
+        try {
+            result = mapper.readValue(file, type);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
-    public static void deserialization(@NotNull File file) {
-    }
-    // endregion
+    //endregion
 }
