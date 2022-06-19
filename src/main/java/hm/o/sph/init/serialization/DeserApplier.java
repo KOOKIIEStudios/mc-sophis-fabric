@@ -40,7 +40,7 @@ public class DeserApplier {
     // region DESERIALIZING CHECKER
 
     public static boolean checkYAMLExtName(@NotNull File file) {
-        return FilenameUtils.getExtension(file.getName()).equals("yaml") || FilenameUtils.getExtension(file.getName()).equals("yml");
+        return FilenameUtils.getExtension(file.getName()).equals("yaml");
     }
 
     public static boolean checkTOMLExtName(@NotNull File file) {

@@ -32,19 +32,9 @@ public class Sophis implements ModInitializer {
 
         var materials = new HashSet<DeserData.Item.Material>();
 
-        Arrays.stream(Objects.requireNonNull(DeserDir.MATERIAL_ITEM.folder.listFiles()))
-                .filter(DeserApplier::checkYAMLExtName)
-                .map(file -> DeserApplier.deser(DeserApplier.YAML, file, DeserData.Item.Material.class))
-                .forEach(materials::add);
-        Arrays.stream(Objects.requireNonNull(DeserDir.MATERIAL_ITEM.folder.listFiles()))
-                .filter(DeserApplier::checkTOMLExtName)
-                .map(file -> DeserApplier.deser(DeserApplier.TOML, file, DeserData.Item.Material.class))
-                .forEach(materials::add);
-        Arrays.stream(Objects.requireNonNull(DeserDir.MATERIAL_ITEM.folder.listFiles()))
-                .filter(DeserApplier::checkJSONExtName)
-                .map(file -> DeserApplier.deser(DeserApplier.JSON, file, DeserData.Item.Material.class))
-                .forEach(materials::add);
+        Arrays.stream(Objects.requireNonNull(DeserDir.MATERIAL_ITEM.folder.listFiles())).filter(DeserApplier::checkTOMLExtName)
+                .map(file -> DeserApplier.deser(DeserApplier.TOML, file, DeserData.Item.Material.class)).forEach(materials::add);
 
-        materials.forEach(System.out::println);
+        materials.forEach(DeserData.Item.Material::register);
     }
 }

@@ -1,5 +1,10 @@
 package hm.o.sph.init.serialization;
 
+import hm.o.sph.init.item.ItemApplier;
+import hm.o.sph.init.item.ItemCategory;
+import hm.o.sph.init.item.SophisItem;
+import hm.o.sph.util.SophisRarity;
+
 import java.util.HashSet;
 
 public class DeserData {
@@ -7,7 +12,7 @@ public class DeserData {
 
         public static final HashSet<Material> Materials = new HashSet<>();
 
-        public static class Material {
+        public static class Material implements Registrable<SophisItem> {
             private String id;
             private String category;
             private String rarity;
@@ -48,6 +53,15 @@ public class DeserData {
             @Override
             public String toString() {
                 return this.id + ":::" + this.category + ":::" + this.rarity + ":::" + this.credit;
+            }
+
+            @Override
+            public SophisItem register() {
+                return ItemApplier.buildItem(id)
+                        .category(ItemCategory.getById(category))
+                        .rarity(SophisRarity.getById(rarity))
+                        .credit(credit)
+                        .idle.get();
             }
         }
 

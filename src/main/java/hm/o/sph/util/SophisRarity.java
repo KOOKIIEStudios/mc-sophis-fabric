@@ -1,5 +1,7 @@
 package hm.o.sph.util;
 
+import org.jetbrains.annotations.NotNull;
+
 public enum SophisRarity {
     COMMON(0xffffff, "common"),
     RARE(0x8379d2, "rare"),
@@ -10,8 +12,6 @@ public enum SophisRarity {
     EX_MYTH(0xffaf4d, "ex_myth"),
     EX_FANTASY(0x4dff82, "ex_fantasy");
 
-
-
     SophisRarity(int hex, String id) {
         this.hex = hex;
         this.id = id;
@@ -20,8 +20,12 @@ public enum SophisRarity {
     public final int hex;
     public final String id;
 
-    @Override
-    public String toString() {
-        return id;
+    public static @NotNull SophisRarity getById(String id) {
+        for(var val : SophisRarity.values()) {
+            if(val.id.equalsIgnoreCase(id)) {
+                return val;
+            }
+        }
+        throw new IllegalArgumentException("Wrong identifier to check Sophis Rarity.");
     }
 }
