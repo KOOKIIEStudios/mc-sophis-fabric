@@ -1,3 +1,4 @@
+//file:noinspection GradlePackageVersionRange
 plugins {
     id 'fabric-loom' version '0.12-SNAPSHOT'
     id 'maven-publish'
@@ -6,21 +7,25 @@ plugins {
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
-archivesBaseName = project.archives_base_name
-version = project.mod_version
-group = project.maven_group
+archivesBaseName = "SOPHIS-VANILLA-RISING"
+version = "19-0.0.1"
+group = "hm.o.sph"
 
 repositories {
 mavenCentral()
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${project.jackson_version}"
-    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-toml:${project.jackson_version}"
+    minecraft "com.mojang:minecraft:1.19"
+    mappings "net.fabricmc:yarn:1.19+build.1:v2"
+    modImplementation "net.fabricmc:fabric-loader:0.14.6"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.55.1+1.19"
+
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-toml:2.13.3"
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.3'
 }
 
 processResources {
